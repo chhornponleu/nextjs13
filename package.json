@@ -1,21 +1,28 @@
 {
   "name": "next13",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "echo 'hello world' > public/hello.txt",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "bundle-": "cd super-app && yarn install && npx expo export && cd .. && mkdir -p updates && rsync -av super-app/dist/ updates/",
+    "bundle": "cd super-app && rm -rf dist/ && yarn && npx expo export && cd ..",
+    "copy": "mkdir -p public/updates/1/$(date +%s) && cp -a super-app/dist/* public/updates/1/$(date +%s)/ && node scripts/exportClientExpoConfig.js > public/updates/1/$(date +%s)/expoConfig.json",
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^13.0.1",
+    "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "8.26.0",
-    "eslint-config-next": "^13.0.1"
+    "@expo/config": "^8.5.4",
+    "@types/node": "^20.11.5",
+    "@types/react": "18.2.48",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "typescript": "^5.3.3"
   }
 }
