@@ -3,18 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "echo DEPLOY_URL=$DEPLOY_URL > .env",
+    "postinstall": "yarn bundleApp",
+    "bundleApp": "cd mobile && rm -rf dist/ && yarn && npx expo export && cd .. && mkdir -p updates/1/$(date +%s) && rsync -av mobile/dist/ updates/1/$(date +%s)/ && node scripts/exportClientExpoConfig.js > updates/1/$(date +%s)/expoConfig.json",
+    "-preinstall": "mkdir -p ./files && echo 'hello' > ./files/hello.txt",
+    "-postinstall": "mkdir -p ./files && echo 'hello' > ./files/hello.txt",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^13.0.1",
+    "@expo/config": "^8.1.2",
+    "form-data": "^4.0.0",
+    "mime": "^4.0.1",
+    "next": "^14.0.4",
+    "nullthrows": "^1.1.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-qr-code": "^2.0.12",
+    "structured-headers": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "8.26.0",
-    "eslint-config-next": "^13.0.1"
+    "@types/node": "^20.11.3",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   }
 }
